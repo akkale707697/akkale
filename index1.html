@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bursa Sıcaklık ve Nem Değerleri</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+        }
+        h1 {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 0;
+            text-align: center;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin: 0;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .counter {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 0;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .footer {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 0;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        function getData() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(this.responseText);
+                    var temperature = data.temperature;
+                    var humidity = data.humidity;
+                    document.getElementById("temperature").innerHTML = "Sıcaklık: " + temperature + "°C";
+                    document.getElementById("humidity").innerHTML = "Nem: " + humidity + "%";
+                }
+            };
+            xhttp.open("GET", "http://localhost:8080/", true);
+            xhttp.send();
+        }
+
+        setInterval(function() {
+            getData();
+        }, 1000);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Bursa Sıcaklık ve Nem Değerleri</h1>
+        <h2>Anlık olarak güncellenmektedir.</h2>
+        <div class="counter" id="counter">
+            <div id="temperature">Sıcaklık:</div>
+            <div id="humidity">Nem:</div>
+        </div>
+        <h3 class="footer">ChatGPT Sağolsun</h3>
+    </div>
+</body>
+</html>
